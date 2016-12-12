@@ -1,25 +1,39 @@
 //package com.myoop.game.sprites;
 //
-//import com.badlogic.gdx.ApplicationAdapter;
-//import com.badlogic.gdx.graphics.Texture;
-//import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+//import com.badlogic.gdx.graphics.g2d.TextureRegion;
+//import com.badlogic.gdx.utils.Array;
 //
 ///**
 // * Created by Champ on 12/12/2559.
 // */
-//public class Animation extends ApplicationAdapter{
-//    Texture enemy;
-//    SpriteBatch batch;
+//public class Animation{
+//    private Array<TextureRegion> frames;
+//    private float maxFrameTime;
+//    private float currentFrameTime;
+//    private int frameCount;
+//    private int frame;
 //
-//
-//    @Override
-//    public void create(){
-//        batch = new SpriteBatch();
-//        enemy = new Texture("enemy1.png");
+//    public Animation(TextureRegion textureRegion,int frameCount,float cycleTime){
+//        frames = new Array<TextureRegion>();
+//        int frameWidth = textureRegion.getRegionWidth();
+//        for (int i = 0; i < frameCount; i++) {
+//            frames.add(new TextureRegion(textureRegion,i*frameWidth,0,frameWidth,textureRegion.getRegionHeight()));
+//        }this.frameCount=frameCount;
+//        maxFrameTime = cycleTime/frameCount;
+//        frame = 0;
 //    }
 //
-//    @Override
-//    public void render(){
+//    public void update(float dt){
+//        currentFrameTime +=dt;
+//        if(currentFrameTime>maxFrameTime){
+//            frame = frame + 1;
+//            currentFrameTime=0;
+//        }if(frame >=frameCount){
+//            frame=0;
+//        }
+//    }
 //
+//    public TextureRegion getFrame(){
+//        return frames.get(frame);
 //    }
 //}
