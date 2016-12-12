@@ -2,13 +2,14 @@ package com.myoop.game.miniGame;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.myoop.game.sprites.Horse;
 
 /**
  * Created by Champ on 9/12/2559.
  */
 public class Quiz {
     private Texture quiz, ans1, ans2, ans3, ans4;
-    private int rightChoice;
+    private int rightChoice=0;
 
     private final Texture[] quiz1 = {new Texture("fun13.png"), new Texture("fun5.png")};
     private final Texture[] quiz2 = {new Texture("fun15.png"), new Texture("fun3.png")};
@@ -18,11 +19,11 @@ public class Quiz {
 
     private final Texture[][] allQuiz = {quiz1, quiz2, quiz3, quiz4,quiz5};
 
-    private final Vector2 posQuiz = new Vector2(0, 270);
-    private final Vector2 posAns1 = new Vector2(-150, 0);
-    private final Vector2 posAns2 = new Vector2(-50, 0);
-    private final Vector2 posAns3 = new Vector2(50, 0);
-    private final Vector2 posAns4 = new Vector2(150, 0);
+    private Vector2 posQuiz = new Vector2(-30, 350);
+    private Vector2 posAns1 = new Vector2(-250, 150);
+    private Vector2 posAns2 = new Vector2(-100, 150);
+    private Vector2 posAns3 = new Vector2(50, 150);
+    private Vector2 posAns4 = new Vector2(150, 150);
 
     public Quiz() {
         generate();
@@ -31,7 +32,7 @@ public class Quiz {
     private void generate() {
         int randQuiz = (int) (Math.random() * 4 + 0);
         int randAns = (int) (Math.random() * 4 + 1);
-        System.out.println("Quiz : " +randQuiz);
+        System.out.println("\nQuiz : " +randQuiz);
         System.out.println("RIGHT ANS : "+randAns);
         setQuiz(allQuiz[randQuiz][0]);
         setChoice(randAns, allQuiz[randQuiz][1]);
@@ -89,6 +90,42 @@ public class Quiz {
 
             }
         }
+    }
+
+    public void update(float dt){
+        posQuiz.add(Horse.MOVEMENT*dt,0);
+        posAns1.add(Horse.MOVEMENT*dt,0);
+        posAns2.add(Horse.MOVEMENT*dt,0);
+        posAns3.add(Horse.MOVEMENT*dt,0);
+        posAns4.add(Horse.MOVEMENT*dt,0);
+    }
+
+    public boolean choose1(){
+        System.out.println("c1");
+        if(rightChoice==1){
+            return true;
+        }return false;
+    }
+
+    public boolean choose2(){
+        System.out.println("c2");
+        if(rightChoice==2){
+            return true;
+        }return false;
+    }
+
+    public boolean choose3(){
+        System.out.println("c3");
+        if(rightChoice==3){
+            return true;
+        }return false;
+    }
+
+    public boolean choose4(){
+        System.out.println("c4");
+        if(rightChoice==4){
+            return true;
+        }return false;
     }
 
 
@@ -159,4 +196,5 @@ public class Quiz {
     public Vector2 getPosAns4() {
         return posAns4;
     }
+
 }

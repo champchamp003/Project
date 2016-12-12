@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.myoop.game.miniGame.Quiz;
+import com.myoop.game.sprites.Enemy;
 import com.myoop.game.sprites.Horse;
 import com.myoop.game.sprites.Rock;
 
@@ -18,46 +19,65 @@ public class PlayState extends State {
     private Horse horse;
     private Texture background;
     private static Random rand = new Random();
-    private static int Obj_SPACE = rand.nextInt(350)+350;
+    private static int Obj_SPACE = rand.nextInt(350) + 350;
     private static int Obj_COUNT = 4;
     private Array<Rock> rocks;
-    private Quiz quiz;
+    private Enemy enemy;
 
     private boolean spaceAlreadyPressed = false;
+
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("BGgif.gif");
         horse = new Horse(15, 200);
         cam.setToOrtho(false, 600, 600);
-        quiz = new Quiz();
-
+        enemy = new Enemy(500);
         rocks = new Array<Rock>();
-        for(int i = 1; i <= Obj_COUNT; i++){
+        for (int i = 1; i <= Obj_COUNT; i++) {
             rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
         }
     }
 
     @Override
     protected void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             horse.jump();
         }
+//        if(cam.position.x > enemy.getPosEnemy().x) {
+//            if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+//                enemy.quiz.choose1();
+//            }
+//            else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+//                enemy.quiz.choose2();
+//            }
+//            else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+//                enemy.quiz.choose3();
+//            }
+//            else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+//                enemy.quiz.choose4();
+//            }
+//        }
     }
 
     @Override
     public void update(float dt) {
         handleInput();
         horse.update(dt);
+        enemy.quiz.update(dt);
         cam.position.x = horse.getPosition().x + 220;
-        for(Rock rock : rocks){
-            if(cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + rock.getRock().getWidth()){
+        for (Rock rock : rocks) {
+            if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + rock.getRock().getWidth()) {
                 rock.reposition(rock.getPosRock().x + ((Rock.ROCK_WIDTH + Obj_SPACE) * Obj_COUNT));
             }
 
-            if(rock.collides(horse.getBounds())){
+            if (rock.collides(horse.getBounds())) {
                 gsm.set(new GameOverState(gsm));
             }
         }
+        if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + 500) {
+            enemy.reposition(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 500));
+        }
+
         cam.update();
     }
 
@@ -65,15 +85,19 @@ public class PlayState extends State {
     public void render(SpriteBatch sb) {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        sb.draw(background,cam.position.x-(cam.viewportWidth / 2),0,600,600);
-        sb.draw(horse.getHorse(),horse.getPosition().x, horse.getPosition().y);
-        sb.draw(quiz.getQuiz(),quiz.getPosQuiz().x,quiz.getPosQuiz().y);
-        sb.draw(quiz.getAns1(),quiz.getPosAns1().x,quiz.getPosAns1().y);
-        sb.draw(quiz.getAns2(),quiz.getPosAns2().x,quiz.getPosAns2().y);
-        sb.draw(quiz.getAns3(),quiz.getPosAns3().x,quiz.getPosAns3().y);
-        sb.draw(quiz.getAns4(),quiz.getPosAns4().x,quiz.getPosAns4().y);
-        for(Rock rock : rocks){
-            sb.draw(rock.getRock(), rock.getPosRock().x , rock.getPosRock().y);
+        sb.draw(background, cam.position.x - (cam.viewportWidth / 2), 0, 600, 600);
+        sb.draw(horse.getHorse(), horse.getPosition().x, horse.getPosition().y);
+        sb.draw(enemy.getEnemy(), enemy.getPosEnemy().x, enemy.getPosEnemy().y);
+        if (cam.position.x > enemy.getPosEnemy().x) {
+            sb.draw(enemy.quiz.getQuiz(), enemy.quiz.getPosQuiz().x, enemy.quiz.getPosQuiz().y);
+            sb.draw(enemy.quiz.getAns1(), enemy.quiz.getPosAns1().x, enemy.quiz.getPosAns1().y);
+            sb.draw(enemy.quiz.getAns2(), enemy.quiz.getPosAns2().x, enemy.quiz.getPosAns2().y);
+            sb.draw(enemy.quiz.getAns3(), enemy.quiz.getPosAns3().x, enemy.quiz.getPosAns3().y);
+            sb.draw(enemy.quiz.getAns4(), enemy.quiz.getPosAns4().x, enemy.quiz.getPosAns4().y);
+        }
+
+        for (Rock rock : rocks) {
+            sb.draw(rock.getRock(), rock.getPosRock().x, rock.getPosRock().y);
         }
         sb.end();
     }

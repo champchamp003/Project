@@ -37,6 +37,7 @@ public class Horse {
 
     }
 
+
     public Vector3 getPosition() {
         return position;
     }
