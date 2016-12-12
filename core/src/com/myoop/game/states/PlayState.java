@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.myoop.game.miniGame.Quiz;
 import com.myoop.game.sprites.Horse;
 import com.myoop.game.sprites.Rock;
 
@@ -20,6 +21,7 @@ public class PlayState extends State {
     private static int Obj_SPACE = rand.nextInt(350)+350;
     private static int Obj_COUNT = 4;
     private Array<Rock> rocks;
+    private Quiz quiz;
 
     private boolean spaceAlreadyPressed = false;
     protected PlayState(GameStateManager gsm) {
@@ -27,6 +29,7 @@ public class PlayState extends State {
         background = new Texture("BGgif.gif");
         horse = new Horse(15, 200);
         cam.setToOrtho(false, 600, 600);
+        quiz = new Quiz();
 
         rocks = new Array<Rock>();
         for(int i = 1; i <= Obj_COUNT; i++){
@@ -64,6 +67,11 @@ public class PlayState extends State {
         sb.begin();
         sb.draw(background,cam.position.x-(cam.viewportWidth / 2),0,600,600);
         sb.draw(horse.getHorse(),horse.getPosition().x, horse.getPosition().y);
+        sb.draw(quiz.getQuiz(),quiz.getPosQuiz().x,quiz.getPosQuiz().y);
+        sb.draw(quiz.getAns1(),quiz.getPosAns1().x,quiz.getPosAns1().y);
+        sb.draw(quiz.getAns2(),quiz.getPosAns2().x,quiz.getPosAns2().y);
+        sb.draw(quiz.getAns3(),quiz.getPosAns3().x,quiz.getPosAns3().y);
+        sb.draw(quiz.getAns4(),quiz.getPosAns4().x,quiz.getPosAns4().y);
         for(Rock rock : rocks){
             sb.draw(rock.getRock(), rock.getPosRock().x , rock.getPosRock().y);
         }
