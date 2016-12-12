@@ -20,7 +20,7 @@ public class Horse {
         position = new Vector3(x,y,0);
         velocity = new Vector3(0, 0, 0);
         horse = new Texture("horse.gif");
-        bounds = new Rectangle(x, y, 40, 40);
+        bounds = new Rectangle(x, y, 50, 50);
     }
 
     public void update(float dt){

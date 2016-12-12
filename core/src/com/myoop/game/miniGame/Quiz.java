@@ -9,7 +9,7 @@ import com.myoop.game.sprites.Horse;
  */
 public class Quiz {
     private Texture quiz, ans1, ans2, ans3, ans4;
-    private int rightChoice=0;
+    private int rightChoice = 0;
 
     private final Texture[] quiz1 = {new Texture("fun13.png"), new Texture("fun5.png")};
     private final Texture[] quiz2 = {new Texture("fun15.png"), new Texture("fun3.png")};
@@ -17,7 +17,7 @@ public class Quiz {
     private final Texture[] quiz4 = {new Texture("fun18.png"), new Texture("fun7.png")};
     private final Texture[] quiz5 = {new Texture("fun12.png"), new Texture("fun1.png")};
 
-    private final Texture[][] allQuiz = {quiz1, quiz2, quiz3, quiz4,quiz5};
+    private final Texture[][] allQuiz = {quiz1, quiz2, quiz3, quiz4, quiz5};
 
     private Vector2 posQuiz = new Vector2(-30, 350);
     private Vector2 posAns1 = new Vector2(-250, 150);
@@ -32,8 +32,8 @@ public class Quiz {
     private void generate() {
         int randQuiz = (int) (Math.random() * 4 + 0);
         int randAns = (int) (Math.random() * 4 + 1);
-        System.out.println("\nQuiz : " +randQuiz);
-        System.out.println("RIGHT ANS : "+randAns);
+        System.out.println("\nQuiz : " + randQuiz);
+        System.out.println("RIGHT ANS : " + randAns);
         setQuiz(allQuiz[randQuiz][0]);
         setChoice(randAns, allQuiz[randQuiz][1]);
 
@@ -63,6 +63,7 @@ public class Quiz {
 
     private void setOtherChoice(int n) {
         setRightChoice(n);
+        System.out.println("RC " + rightChoice);
         int randQuiz = (int) (Math.random() * 4 + 0);
         for (int i = 1; i <= 4; i++) {
             if (i != n) {
@@ -92,40 +93,37 @@ public class Quiz {
         }
     }
 
-    public void update(float dt){
-        posQuiz.add(Horse.MOVEMENT*dt,0);
-        posAns1.add(Horse.MOVEMENT*dt,0);
-        posAns2.add(Horse.MOVEMENT*dt,0);
-        posAns3.add(Horse.MOVEMENT*dt,0);
-        posAns4.add(Horse.MOVEMENT*dt,0);
+    public void update(float dt) {
+        posQuiz.add(Horse.MOVEMENT * dt, 0);
+        posAns1.add(Horse.MOVEMENT * dt, 0);
+        posAns2.add(Horse.MOVEMENT * dt, 0);
+        posAns3.add(Horse.MOVEMENT * dt, 0);
+        posAns4.add(Horse.MOVEMENT * dt, 0);
     }
 
-    public boolean choose1(){
-        System.out.println("c1");
-        if(rightChoice==1){
-            return true;
-        }return false;
+    public void reposition(float v) {
+        posQuiz.x += v;
+        posAns1.x += v;
+        posAns2.x += v;
+        posAns3.x += v;
+        posAns4.x += v;
     }
 
-    public boolean choose2(){
-        System.out.println("c2");
-        if(rightChoice==2){
+    public boolean choose(int n) {
+        System.out.println(n);
+        if (rightChoice == n) {
             return true;
-        }return false;
+        }
+        return false;
     }
 
-    public boolean choose3(){
-        System.out.println("c3");
-        if(rightChoice==3){
-            return true;
-        }return false;
-    }
+    public void dispose(){
+        quiz = new Texture("empty.png");
+        ans1 = new Texture("empty.png");
+        ans2 = new Texture("empty.png");
+        ans3 = new Texture("empty.png");
+        ans4 = new Texture("empty.png");
 
-    public boolean choose4(){
-        System.out.println("c4");
-        if(rightChoice==4){
-            return true;
-        }return false;
     }
 
 

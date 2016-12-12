@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.myoop.game.miniGame.Quiz;
+import com.myoop.game.sprites.Bat;
 import com.myoop.game.sprites.Enemy;
 import com.myoop.game.sprites.Horse;
 import com.myoop.game.sprites.Rock;
@@ -19,10 +20,15 @@ public class PlayState extends State {
     private Horse horse;
     private Texture background;
     private static Random rand = new Random();
-    private static int Obj_SPACE = rand.nextInt(350) + 350;
+    private static int Obj_SPACE = rand.nextInt(500) + 250;
     private static int Obj_COUNT = 4;
     private Array<Rock> rocks;
+    private Rock rock;
+    private Bat bat;
     private Enemy enemy;
+    private boolean endInput = false;
+    public boolean canJump = true;
+   // private Array<obj> obj = {rock,bat,enemy};
 
     private boolean spaceAlreadyPressed = false;
 
@@ -31,32 +37,68 @@ public class PlayState extends State {
         background = new Texture("BGgif.gif");
         horse = new Horse(15, 200);
         cam.setToOrtho(false, 600, 600);
-        enemy = new Enemy(500);
-        rocks = new Array<Rock>();
-        for (int i = 1; i <= Obj_COUNT; i++) {
-            rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
+
+//        enemy = new Enemy();
+//        bat = new Bat();
+//        rock = new Rock();
+//        for (int i = 1; i <= Obj_COUNT; i++) {
+//            rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
+//        }
+    }
+
+    private void randomObj(){
+        int rand = (int) (Math.random() * 100 + 1);
+        if(rand<=50){
+            rock = new Rock(horse.getPosition().x+Obj_SPACE);
+        }else if(rand>50&&rand<=80){
+            bat = new Bat(horse.getPosition().x+Obj_SPACE);
+        }else {
+            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 700));
+            enemy.quiz.reposition(horse.getPosition().x);
         }
     }
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && canJump) {
             horse.jump();
         }
-//        if(cam.position.x > enemy.getPosEnemy().x) {
-//            if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-//                enemy.quiz.choose1();
-//            }
-//            else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-//                enemy.quiz.choose2();
-//            }
-//            else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-//                enemy.quiz.choose3();
-//            }
-//            else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-//                enemy.quiz.choose4();
-//            }
-//        }
+        if (cam.position.x > enemy.getPosEnemy().x && !endInput) {
+            canJump = false;
+            if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+                endInput = true;
+                if (enemy.quiz.choose(1)) {
+                    canJump = true;
+                    enemy.dispose();
+                    enemy.quiz.dispose();
+                    System.out.println("GG");
+                }
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+                endInput = true;
+                if (enemy.quiz.choose(2)) {
+                    canJump = true;
+                    enemy.dispose();
+                    enemy.quiz.dispose();
+                    System.out.println("GG");
+                }
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                endInput = true;
+                if (enemy.quiz.choose(3)) {
+                    canJump = true;
+                    enemy.dispose();
+                    enemy.quiz.dispose();
+                    System.out.println("GG");
+                }
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                endInput = true;
+                if (enemy.quiz.choose(4)) {
+                    canJump = true;
+                    enemy.dispose();
+                    enemy.quiz.dispose();
+                    System.out.println("GG");
+                }
+            }
+        }
     }
 
     @Override
@@ -65,19 +107,37 @@ public class PlayState extends State {
         horse.update(dt);
         enemy.quiz.update(dt);
         cam.position.x = horse.getPosition().x + 220;
-        for (Rock rock : rocks) {
-            if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + rock.getRock().getWidth()) {
-                rock.reposition(rock.getPosRock().x + ((Rock.ROCK_WIDTH + Obj_SPACE) * Obj_COUNT));
-            }
+//        for (Rock rock : rocks) {
+//            if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + rock.getRock().getWidth()) {
+//                rock.reposition(rock.getPosRock().x + ((Rock.ROCK_WIDTH + Obj_SPACE) * Obj_COUNT));
+//            }
+//
+//            if (rock.collides(horse.getBounds())) {
+//                gsm.set(new GameOverState(gsm));
+//            }
+//        }
+        if (enemy.collides(horse.getBounds())) {
+            gsm.set(new GameOverState(gsm));
 
-            if (rock.collides(horse.getBounds())) {
-                gsm.set(new GameOverState(gsm));
-            }
         }
         if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + 500) {
-            enemy.reposition(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 500));
+            endInput = false;
+            randomObj();
         }
 
+        if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + 500) {
+            endInput = false;
+            randomObj();
+        }
+
+        if (cam.position.x - (cam.viewportWidth / 2) > bat.getPosBat().x + 500) {
+            endInput = false;
+            randomObj();
+        }
+
+        if (bat.collides(horse.getBounds())) {
+            gsm.set(new GameOverState(gsm));
+        }
         cam.update();
     }
 
@@ -88,6 +148,8 @@ public class PlayState extends State {
         sb.draw(background, cam.position.x - (cam.viewportWidth / 2), 0, 600, 600);
         sb.draw(horse.getHorse(), horse.getPosition().x, horse.getPosition().y);
         sb.draw(enemy.getEnemy(), enemy.getPosEnemy().x, enemy.getPosEnemy().y);
+        sb.draw(bat.getBat(), bat.getPosBat().x, bat.getPosBat().y);
+        sb.draw(rock.getRock(),rock.getPosRock().x,rock.getPosRock().y);
         if (cam.position.x > enemy.getPosEnemy().x) {
             sb.draw(enemy.quiz.getQuiz(), enemy.quiz.getPosQuiz().x, enemy.quiz.getPosQuiz().y);
             sb.draw(enemy.quiz.getAns1(), enemy.quiz.getPosAns1().x, enemy.quiz.getPosAns1().y);
@@ -96,9 +158,9 @@ public class PlayState extends State {
             sb.draw(enemy.quiz.getAns4(), enemy.quiz.getPosAns4().x, enemy.quiz.getPosAns4().y);
         }
 
-        for (Rock rock : rocks) {
-            sb.draw(rock.getRock(), rock.getPosRock().x, rock.getPosRock().y);
-        }
+//        for (Rock rock : rocks) {
+//            sb.draw(rock.getRock(), rock.getPosRock().x, rock.getPosRock().y);
+//        }
         sb.end();
     }
 
