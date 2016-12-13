@@ -5,8 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.myoop.game.miniGame.Quiz;
-import com.myoop.game.sprites.Bat;
+//import com.myoop.game.sprites.Bat;
 import com.myoop.game.sprites.Enemy;
 import com.myoop.game.sprites.Horse;
 import com.myoop.game.sprites.Rock;
@@ -24,7 +23,7 @@ public class PlayState extends State {
     private static int Obj_COUNT = 4;
     private Array<Rock> rocks;
     private Rock rock;
-    private Bat bat;
+    //private Bat bat;
     private Enemy enemy;
     private boolean endInput = false;
     public boolean canJump = true;
@@ -38,7 +37,7 @@ public class PlayState extends State {
         horse = new Horse(15, 200);
         cam.setToOrtho(false, 600, 600);
 
-//        enemy = new Enemy();
+        enemy = new Enemy(500);
 //        bat = new Bat();
 //        rock = new Rock();
 //        for (int i = 1; i <= Obj_COUNT; i++) {
@@ -46,17 +45,17 @@ public class PlayState extends State {
 //        }
     }
 
-    private void randomObj(){
-        int rand = (int) (Math.random() * 100 + 1);
-        if(rand<=50){
-            rock = new Rock(horse.getPosition().x+Obj_SPACE);
-        }else if(rand>50&&rand<=80){
-            bat = new Bat(horse.getPosition().x+Obj_SPACE);
-        }else {
-            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 700));
-            enemy.quiz.reposition(horse.getPosition().x);
-        }
-    }
+//    private void randomObj(){
+//        int rand = (int) (Math.random() * 100 + 1);
+//        if(rand<=50){
+//            rock = new Rock(horse.getPosition().x+Obj_SPACE);
+//        }else if(rand>50&&rand<=80){
+//            bat = new Bat(horse.getPosition().x+Obj_SPACE);
+//        }else {
+//            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 700));
+//            enemy.quiz.reposition(horse.getPosition().x);
+//        }
+//    }
 
     @Override
     protected void handleInput() {
@@ -122,22 +121,23 @@ public class PlayState extends State {
         }
         if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + 500) {
             endInput = false;
-            randomObj();
+            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 700));
+            enemy.quiz.reposition(horse.getPosition().x);
         }
+//
+//        if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + 500) {
+//            endInput = false;
+//            randomObj();
+//        }
 
-        if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + 500) {
-            endInput = false;
-            randomObj();
-        }
-
-        if (cam.position.x - (cam.viewportWidth / 2) > bat.getPosBat().x + 500) {
-            endInput = false;
-            randomObj();
-        }
-
-        if (bat.collides(horse.getBounds())) {
-            gsm.set(new GameOverState(gsm));
-        }
+//        if (cam.position.x - (cam.viewportWidth / 2) > bat.getPosBat().x + 500) {
+//            endInput = false;
+//            randomObj();
+//        }
+//
+//        if (bat.collides(horse.getBounds())) {
+//            gsm.set(new GameOverState(gsm));
+//        }
         cam.update();
     }
 
@@ -148,8 +148,8 @@ public class PlayState extends State {
         sb.draw(background, cam.position.x - (cam.viewportWidth / 2), 0, 600, 600);
         sb.draw(horse.getHorse(), horse.getPosition().x, horse.getPosition().y);
         sb.draw(enemy.getEnemy(), enemy.getPosEnemy().x, enemy.getPosEnemy().y);
-        sb.draw(bat.getBat(), bat.getPosBat().x, bat.getPosBat().y);
-        sb.draw(rock.getRock(),rock.getPosRock().x,rock.getPosRock().y);
+        //sb.draw(bat.getBat(), bat.getPosBat().x, bat.getPosBat().y);
+       // sb.draw(rock.getRock(),rock.getPosRock().x,rock.getPosRock().y);
         if (cam.position.x > enemy.getPosEnemy().x) {
             sb.draw(enemy.quiz.getQuiz(), enemy.quiz.getPosQuiz().x, enemy.quiz.getPosQuiz().y);
             sb.draw(enemy.quiz.getAns1(), enemy.quiz.getPosAns1().x, enemy.quiz.getPosAns1().y);
