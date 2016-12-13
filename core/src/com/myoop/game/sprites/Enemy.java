@@ -42,6 +42,7 @@ public class Enemy {
 
     public void dispose(){
         enemy = new Texture("empty.png");
+        quiz.dispose();
         hitBox.setSize(0,0);
     }
 }

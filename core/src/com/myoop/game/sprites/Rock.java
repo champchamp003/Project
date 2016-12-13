@@ -39,4 +39,9 @@ public class Rock {
     public boolean collides(Rectangle player){
         return player.overlaps(boundsRock);
     }
+
+    public void dispose(){
+        rock = new Texture("empty.png");
+        boundsRock.setSize(0,0);
+    }
 }

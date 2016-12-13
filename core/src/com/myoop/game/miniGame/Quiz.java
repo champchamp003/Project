@@ -11,26 +11,41 @@ public class Quiz {
     private Texture quiz, ans1, ans2, ans3, ans4;
     private int rightChoice = 0;
 
-    private final Texture[] quiz1 = {new Texture("fun13.png"), new Texture("fun5.png")};
-    private final Texture[] quiz2 = {new Texture("fun15.png"), new Texture("fun3.png")};
-    private final Texture[] quiz3 = {new Texture("fun16.png"), new Texture("fun4.png")};
-    private final Texture[] quiz4 = {new Texture("fun18.png"), new Texture("fun7.png")};
-    private final Texture[] quiz5 = {new Texture("fun12.png"), new Texture("fun1.png")};
+    private final Texture[] quiz1 = {new Texture("quiz1.png"), new Texture("ans1.png")};
+    private final Texture[] quiz2 = {new Texture("quiz2.png"), new Texture("ans2.png")};
+    private final Texture[] quiz3 = {new Texture("quiz3.png"), new Texture("ans3.png")};
+    private final Texture[] quiz4 = {new Texture("quiz4.png"), new Texture("ans4.png")};
+    private final Texture[] quiz5 = {new Texture("quiz5.png"), new Texture("ans5.png")};
+    private final Texture[] quiz6 = {new Texture("quiz6.png"), new Texture("ans6.png")};
+    private final Texture[] quiz7 = {new Texture("quiz7.png"), new Texture("ans7.png")};
+    private final Texture[] quiz8 = {new Texture("quiz8.png"), new Texture("ans8.png")};
+    private final Texture[] quiz9 = {new Texture("quiz9.png"), new Texture("ans9.png")};
+    private final Texture[] quiz10 = {new Texture("quiz10.png"), new Texture("ans10.png")};
+    private final Texture[] quiz11 = {new Texture("quiz11.png"), new Texture("ans11.png")};
+    private final Texture[] quiz12 = {new Texture("quiz12.png"), new Texture("ans12.png")};
+    private final Texture[] quiz13 = {new Texture("quiz13.png"), new Texture("ans13.png")};
+    private final Texture[] quiz14 = {new Texture("quiz14.png"), new Texture("ans14.png")};
+    private final Texture[] quiz15 = {new Texture("quiz15.png"), new Texture("ans15.png")};
+    private final Texture[] quiz16 = {new Texture("quiz16.png"), new Texture("ans16.png")};
+    private final Texture[] quiz17 = {new Texture("quiz17.png"), new Texture("ans17.png")};
+    private final Texture[] quiz18 = {new Texture("quiz18.png"), new Texture("ans18.png")};
+    private final Texture[] quiz19 = {new Texture("quiz19.png"), new Texture("ans19.png")};
+    private final Texture[] quiz20 = {new Texture("quiz20.png"), new Texture("ans20.png")};
 
-    private final Texture[][] allQuiz = {quiz1, quiz2, quiz3, quiz4, quiz5};
+    private final Texture[][] allQuiz = {quiz1, quiz2, quiz3, quiz4, quiz5, quiz6, quiz7, quiz8, quiz9, quiz10, quiz11, quiz12, quiz13, quiz14, quiz15, quiz16, quiz17, quiz18, quiz19, quiz20};
 
-    private Vector2 posQuiz = new Vector2(-30, 350);
-    private Vector2 posAns1 = new Vector2(-250, 150);
-    private Vector2 posAns2 = new Vector2(-100, 150);
-    private Vector2 posAns3 = new Vector2(50, 150);
-    private Vector2 posAns4 = new Vector2(150, 150);
+    private Vector2 posQuiz = new Vector2(57, 255);
+    private Vector2 posAns1 = new Vector2(45, 300);
+    private Vector2 posAns2 = new Vector2(145, 300);
+    private Vector2 posAns3 = new Vector2(245, 300);
+    private Vector2 posAns4 = new Vector2(345, 300);
 
     public Quiz() {
         generate();
     }
 
     private void generate() {
-        int randQuiz = (int) (Math.random() * 4 + 0);
+        int randQuiz = (int) (Math.random() * 19 + 0);
         int randAns = (int) (Math.random() * 4 + 1);
         System.out.println("\nQuiz : " + randQuiz);
         System.out.println("RIGHT ANS : " + randAns);
@@ -64,7 +79,7 @@ public class Quiz {
     private void setOtherChoice(int n) {
         setRightChoice(n);
         System.out.println("RC " + rightChoice);
-        int randQuiz = (int) (Math.random() * 4 + 0);
+        int randQuiz = (int) (Math.random() * 19 + 0);
         for (int i = 1; i <= 4; i++) {
             if (i != n) {
                 while (allQuiz[randQuiz][1].equals(ans1) || allQuiz[randQuiz][1].equals(ans2) || allQuiz[randQuiz][1].equals(ans3) || allQuiz[randQuiz][1].equals(ans4)) {
@@ -117,7 +132,7 @@ public class Quiz {
         return false;
     }
 
-    public void dispose(){
+    public void dispose() {
         quiz = new Texture("empty.png");
         ans1 = new Texture("empty.png");
         ans2 = new Texture("empty.png");
