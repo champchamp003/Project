@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.myoop.game.sprites.*;
-import com.myoop.game.miniGame.Quiz;
-
 import java.util.Random;
 
 /**
@@ -19,7 +17,7 @@ public class PlayState extends State {
     private static Random rand = new Random();
     //private int random = (int) (Math.random() * 1000 + 200);
     private static int Obj_SPACE = rand.nextInt(350) + 350;
-    private static int Obj_COUNT = 4;
+    //private static int Obj_COUNT = 4;
     //private Array<Rock> rocks;
     private Rock rock;
     private Bat bat;
@@ -54,11 +52,11 @@ public class PlayState extends State {
 
     private void randomObj(int n) {
         for (int i = 0; i < n; i++) {
-            int rand = (int) (Math.random() * 5 + 1);
-            if (rand == 1 || rand == 2 || rand == 3) {
+            int rand = (int) (Math.random() * 7 + 1);
+            if (rand < 7 ) {
                 obj.add(new Rock(horse.getPosition().x + (obj.size + 1) * (Obj_SPACE + Rock.ROCK_WIDTH + 150)));
                 //rock = new Rock(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
-            } else if (rand == 4 || rand == 5) {
+            } else if (rand == 7) {
                 obj.add(new Bat(horse.getPosition().x + (obj.size + 1) * (Obj_SPACE + Bat.BAT_WIDTH + 150)));
                 //bat = new Bat(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
 //            } else if (rand == 9 || rand == 10) {
@@ -74,7 +72,7 @@ public class PlayState extends State {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             horse.jump();
         }
-        if (cam.position.x > enemy.getPosEnemy().x && !endInput) {
+        if (cam.position.x > enemy.getPosEnemy().x - enemy.ENEMY_WIDTH-150 && !endInput) {
             canJump = false;
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
                 endInput = true;
@@ -111,10 +109,12 @@ public class PlayState extends State {
     public void update(float dt) {
         handleInput();
         horse.update(dt);
+        enemy.update(dt);
         enemy.quiz.update(dt);
         cam.position.x = horse.getPosition().x + 220;
         for (ISprite subObj : obj) {
-            if (cam.position.x - (cam.viewportWidth / 2) > subObj.getPos().x + subObj.getTexture().getWidth()) {
+            subObj.update(dt);
+            if (cam.position.x - (cam.viewportWidth / 2) > subObj.getPos().x + subObj.getNorTex().getWidth()) {
                 endInput = false;
                 obj.removeIndex(0);
                 System.out.println("pop");
@@ -142,26 +142,7 @@ public class PlayState extends State {
             enemy.dispose(-1);
             System.out.println("remove enemy");
         }
-//            if((obj.get(0).getPos().x - enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + 700))  < -500 || obj.get(0).getPos().x - (enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + 700))  > 500){
 
-//            }
-
-
-//        if (cam.position.x - (cam.viewportWidth / 2) > obj.first().getPos().x +150) {
-//            endInput = false;
-//            obj.pop();
-//            System.out.println("pop");
-//            randomObj(1);
-//        }
-
-//        if (cam.position.x - (cam.viewportWidth / 2) > bat.getPosBat().x +500) {
-//            endInput = false;
-//            randomObj();
-//        }
-//
-//        if (bat.collides(horse.getBounds())) {
-//            gsm.set(new GameOverState(gsm));
-//        }
         cam.update();
     }
 
@@ -172,9 +153,7 @@ public class PlayState extends State {
         sb.draw(background, cam.position.x - (cam.viewportWidth / 2), 0, 600, 600);
         sb.draw(horse.getHorse(), horse.getPosition().x, horse.getPosition().y);
         sb.draw(enemy.getEnemy(), enemy.getPosEnemy().x, enemy.getPosEnemy().y);
-//        sb.draw(bat.getBat(), bat.getPosBat().x, bat.getPosBat().y);
-//        sb.draw(rock.getRock(),rock.getPosRock().x,rock.getPosRock().y);
-        if (cam.position.x > enemy.getPosEnemy().x) {
+        if (cam.position.x > enemy.getPosEnemy().x - enemy.ENEMY_WIDTH-150) {
             sb.draw(enemy.quiz.getQuiz(), enemy.quiz.getPosQuiz().x, enemy.quiz.getPosQuiz().y);
             sb.draw(enemy.quiz.getAns1(), enemy.quiz.getPosAns1().x, enemy.quiz.getPosAns1().y);
             sb.draw(enemy.quiz.getAns2(), enemy.quiz.getPosAns2().x, enemy.quiz.getPosAns2().y);

@@ -1,6 +1,7 @@
 package com.myoop.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,10 +11,11 @@ import java.util.Random;
  * Created by WaveToMe on 11/10/2016 AD.
  */
 public class Rock implements ISprite{
-    public Texture getTexture() {
-        return rock;
+    public TextureRegion getTexture() {
+        return new TextureRegion(rock);
     }
-
+    public Texture getNorTex(){
+        return rock;}
     public Vector2 getPos() {
         return posRock;
     }
@@ -28,7 +30,7 @@ public class Rock implements ISprite{
         rock = new Texture("rock.png");
         rand = new Random();
         posRock = new Vector2(x, 32);
-        boundsRock = new Rectangle(posRock.x, posRock.y, 40, 130);
+        boundsRock = new Rectangle(posRock.x, posRock.y, rock.getWidth()-30,rock.getHeight()-30);
     }
 
     public void reposition(float x){
@@ -41,7 +43,10 @@ public class Rock implements ISprite{
     }
 
     public void dispose(){
-        rock = new Texture("empty.png");
-        boundsRock.setSize(0,0);
+
+    }
+
+    public void update(float dt){
+
     }
 }
