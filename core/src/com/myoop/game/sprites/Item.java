@@ -1,5 +1,7 @@
 package com.myoop.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +15,7 @@ public class Item {
     private Texture item;
     private Vector2 posItem;
     public Rectangle hitBoxItem;
+    private Music pick;
 
     public Texture getItem() {
         return item;
@@ -26,7 +29,8 @@ public class Item {
         item = new Texture("item.png");
         posItem = new Vector2(x,y);
         hitBoxItem = new Rectangle(posItem.x,posItem.y,ITEM_WIDTH,ITEM_HIGHT);
-    }
+        pick = Gdx.audio.newMusic(Gdx.files.internal("mario.mp3"));
+        }
 
 
 
@@ -36,6 +40,7 @@ public class Item {
 
     public void pickUp(){
         item = new Texture("empty.png");
+        pick.play();
     }
 
     public void hide(){
@@ -45,6 +50,7 @@ public class Item {
 
     public void dispose(){
         item.dispose();
+        pick.dispose();
     }
 
 }

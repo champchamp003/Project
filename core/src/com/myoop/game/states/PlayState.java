@@ -188,12 +188,18 @@ public class PlayState extends State {
         sb.draw(score0.getScore(),score0.getPos().x,score0.getPos().y);
         sb.draw(score1.getScore(),score1.getPos().x,score1.getPos().y);
         sb.draw(ScorePic,score1.getPos().x-80,score1.getPos().y);
-        if (cam.position.x >= enemy.getPosEnemy().x - enemy.ENEMY_WIDTH -50 ) {
+        if (cam.position.x >= enemy.getPosEnemy().x - enemy.ENEMY_WIDTH -150 ) {
             sb.draw(enemy.quiz.getQuiz(), enemy.quiz.getPosQuiz().x, enemy.quiz.getPosQuiz().y);
+
             sb.draw(enemy.quiz.getAns1(), enemy.quiz.getPosAns1().x, enemy.quiz.getPosAns1().y);
             sb.draw(enemy.quiz.getAns2(), enemy.quiz.getPosAns2().x, enemy.quiz.getPosAns2().y);
             sb.draw(enemy.quiz.getAns3(), enemy.quiz.getPosAns3().x, enemy.quiz.getPosAns3().y);
             sb.draw(enemy.quiz.getAns4(), enemy.quiz.getPosAns4().x, enemy.quiz.getPosAns4().y);
+
+            sb.draw(enemy.quiz.getCh1(), enemy.quiz.getPosCh1().x, enemy.quiz.getPosCh1().y);
+            sb.draw(enemy.quiz.getCh2(), enemy.quiz.getPosCh2().x, enemy.quiz.getPosCh2().y);
+            sb.draw(enemy.quiz.getCh3(), enemy.quiz.getPosCh3().x, enemy.quiz.getPosCh3().y);
+            sb.draw(enemy.quiz.getCh4(), enemy.quiz.getPosCh4().x, enemy.quiz.getPosCh4().y);
         }
 
         for (ISprite subObj : obj) {

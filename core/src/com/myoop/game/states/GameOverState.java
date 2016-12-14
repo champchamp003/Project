@@ -12,6 +12,8 @@ import com.myoop.game.sprites.Score;
  */
 public class GameOverState extends State {
     private Texture background;
+    private Texture highSC;
+    private Texture yourSC;
     private Music music;
     private int highScore;
     private int myScore;
@@ -33,6 +35,8 @@ public class GameOverState extends State {
         myScore1 = new Score(380,300);
         highScore0 = new Score(220,300);
         highScore1 = new Score(200,300);
+        highSC = new Texture("highscore.png");
+        yourSC = new Texture("yourscore.png");
     }
 
     @Override
@@ -57,10 +61,12 @@ public class GameOverState extends State {
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         sb.draw(background,cam.position.x-(cam.viewportWidth / 2),0,600,600);
-        sb.draw(myScore0.getScore(),myScore0.getPos().x,myScore0.getPos().y);
-        sb.draw(myScore1.getScore(),myScore1.getPos().x,myScore1.getPos().y);
-        sb.draw(highScore0.getScore(),highScore0.getPos().x,highScore0.getPos().y);
-        sb.draw(highScore1.getScore(),highScore1.getPos().x,highScore1.getPos().y);
+        sb.draw(myScore0.getScore(),myScore0.getPos().x-295,myScore0.getPos().y-50);
+        sb.draw(myScore1.getScore(),myScore1.getPos().x-295,myScore1.getPos().y-50);
+        sb.draw(highScore0.getScore(),highScore0.getPos().x-115,highScore0.getPos().y+70);
+        sb.draw(highScore1.getScore(),highScore1.getPos().x-115,highScore1.getPos().y+70);
+        sb.draw(highSC,highScore0.getPos().x-150,highScore0.getPos().y+110 );
+        sb.draw(yourSC,myScore0.getPos().x-330,myScore0.getPos().y-13);
         sb.end();
     }
 

@@ -11,6 +11,11 @@ public class Quiz {
     private Texture quiz, ans1, ans2, ans3, ans4;
     private int rightChoice = 0;
 
+    private final Texture ch1 = new Texture("num1.png");
+    private final Texture ch2 = new Texture("num2.png");
+    private final Texture ch3 = new Texture("num3.png");
+    private final Texture ch4 = new Texture("num4.png");
+
     private final Texture correct = new Texture("correct.png");
     private final Texture wrong = new Texture("wrong.png");
     private final Texture empty = new Texture("empty.png");
@@ -44,6 +49,11 @@ public class Quiz {
     private Vector2 posAns3 = new Vector2(242, 300);
     private Vector2 posAns4 = new Vector2(316, 300);
 
+    private Vector2 posCh1 = new Vector2(posAns1.x,posAns1.y+25);
+    private Vector2 posCh2 = new Vector2(posAns2.x,posAns2.y+25);
+    private Vector2 posCh3 = new Vector2(posAns3.x,posAns3.y+25);
+    private Vector2 posCh4 = new Vector2(posAns4.x,posAns4.y+25);
+
     public Quiz() {
         generate();
     }
@@ -55,8 +65,6 @@ public class Quiz {
         System.out.println("RIGHT ANS : " + randAns);
         setQuiz(allQuiz[randQuiz][0]);
         setChoice(randAns, allQuiz[randQuiz][1]);
-
-
     }
 
     private void setChoice(int choice, Texture ans) {
@@ -117,6 +125,10 @@ public class Quiz {
         posAns2.add(Horse.MOVEMENT * dt, 0);
         posAns3.add(Horse.MOVEMENT * dt, 0);
         posAns4.add(Horse.MOVEMENT * dt, 0);
+        posCh1.add(Horse.MOVEMENT * dt,0);
+        posCh2.add(Horse.MOVEMENT * dt,0);
+        posCh3.add(Horse.MOVEMENT * dt,0);
+        posCh4.add(Horse.MOVEMENT * dt,0);
     }
 
     public void reposition(float v) {
@@ -221,4 +233,35 @@ public class Quiz {
         return rightChoice;
     }
 
+    public Vector2 getPosCh1() {
+        return posCh1;
+    }
+
+    public Vector2 getPosCh2() {
+        return posCh2;
+    }
+
+    public Vector2 getPosCh3() {
+        return posCh3;
+    }
+
+    public Vector2 getPosCh4() {
+        return posCh4;
+    }
+
+    public Texture getCh1() {
+        return ch1;
+    }
+
+    public Texture getCh2() {
+        return ch2;
+    }
+
+    public Texture getCh3() {
+        return ch3;
+    }
+
+    public Texture getCh4() {
+        return ch4;
+    }
 }
