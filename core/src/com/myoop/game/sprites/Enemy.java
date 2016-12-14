@@ -15,7 +15,7 @@ public class Enemy {
     private Texture enemy = new Texture("enemy1.png");
     private Vector2 posEnemy;
     public Quiz quiz = new Quiz();
-    private Rectangle hitBox;
+    public Rectangle hitBox;
 
     public Enemy(float x){
         posEnemy = new Vector2(x,0);
@@ -44,7 +44,10 @@ public class Enemy {
         if(n==quiz.getRightChoice()){
             enemy = new Texture("dead.png");
             hitBox.setSize(0,0);
-            posEnemy.set(posEnemy.x,posEnemy.y+50);
+            posEnemy.set(posEnemy.x+275,posEnemy.y+50);
+        }if(n==-1){
+            enemy = new Texture("empty.png");
+            hitBox.setSize(0,0);
         }
         quiz.dispose(n);
 

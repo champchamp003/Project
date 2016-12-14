@@ -39,10 +39,10 @@ public class Quiz {
     private final Texture[][] allQuiz = {quiz1, quiz2, quiz3, quiz4, quiz5, quiz6, quiz7, quiz8, quiz9, quiz10, quiz11, quiz12, quiz13, quiz14, quiz15, quiz16, quiz17, quiz18, quiz19, quiz20};
 
     private Vector2 posQuiz = new Vector2(57, 255);
-    private Vector2 posAns1 = new Vector2(45, 300);
-    private Vector2 posAns2 = new Vector2(145, 300);
-    private Vector2 posAns3 = new Vector2(245, 300);
-    private Vector2 posAns4 = new Vector2(345, 300);
+    private Vector2 posAns1 = new Vector2(79, 300);
+    private Vector2 posAns2 = new Vector2(159, 300);
+    private Vector2 posAns3 = new Vector2(239, 300);
+    private Vector2 posAns4 = new Vector2(316, 300);
 
     public Quiz() {
         generate();
@@ -82,12 +82,11 @@ public class Quiz {
 
     private void setOtherChoice(int n) {
         setRightChoice(n);
-        System.out.println("RC " + rightChoice);
         int randQuiz = (int) (Math.random() * 19 + 0);
         for (int i = 1; i <= 4; i++) {
             if (i != n) {
                 while (allQuiz[randQuiz][1].equals(ans1) || allQuiz[randQuiz][1].equals(ans2) || allQuiz[randQuiz][1].equals(ans3) || allQuiz[randQuiz][1].equals(ans4)) {
-                    randQuiz = (int) (Math.random() * 4 + 0);
+                    randQuiz = (int) (Math.random() * 19 + 0);
                 }
                 switch (i) {
                     case 1:
@@ -138,17 +137,18 @@ public class Quiz {
 
     public void dispose(int n) {
         quiz = empty;
+        if(n==rightChoice){
+            quiz = correct;
+            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
+        }else if(n!=rightChoice&&n!=0&&n!=-1){
+            quiz = wrong;
+            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
+        }
         ans1 = empty;
         ans2 = empty;
         ans3 = empty;
         ans4 = empty;
-        if(n==rightChoice){
-            quiz = correct;
-            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
-        }else if(n!=rightChoice){
-            quiz = wrong;
-            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
-        }
+
 
     }
 

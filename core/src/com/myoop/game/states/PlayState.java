@@ -18,7 +18,7 @@ public class PlayState extends State {
     private Texture background;
     private static Random rand = new Random();
     //private int random = (int) (Math.random() * 1000 + 200);
-    private static int Obj_SPACE = rand.nextInt(350) + 500;
+    private static int Obj_SPACE = rand.nextInt(350) + 350;
     private static int Obj_COUNT = 4;
     //private Array<Rock> rocks;
     private Rock rock;
@@ -27,7 +27,6 @@ public class PlayState extends State {
     private boolean endInput = false;
     public boolean canJump = true;
     private Array<ISprite> obj = new Array<ISprite>();
-    private Quiz quiz;
 
     private boolean spaceAlreadyPressed = false;
 
@@ -47,20 +46,20 @@ public class PlayState extends State {
         //randomObj();
 //        bat = new Bat();
 //        rock = new Rock();
-        randomObj(4);
+        randomObj(3);
 //        for (int i = 1; i <= Obj_COUNT; i++) {
 //            rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
 //        }
     }
 
     private void randomObj(int n) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < n; i++) {
             int rand = (int) (Math.random() * 5 + 1);
             if (rand == 1 || rand == 2 || rand == 3) {
-                obj.add(new Rock((obj.size+1)*(Obj_SPACE + Rock.ROCK_WIDTH)));
+                obj.add(new Rock(horse.getPosition().x+(obj.size+1)*(Obj_SPACE + Rock.ROCK_WIDTH+150)));
                 //rock = new Rock(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
             } else if (rand == 4 || rand == 5) {
-                obj.add(new Bat((obj.size+1)*(Obj_SPACE + Bat.BAT_WIDTH)));
+                obj.add(new Bat(horse.getPosition().x+(obj.size+1)*(Obj_SPACE + Bat.BAT_WIDTH+150)));
                 //bat = new Bat(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
 //            } else if (rand == 9 || rand == 10) {
 //                obj.add(new Enemy((obj.size+1)*(Obj_SPACE + Enemy.ENEMY_WIDTH)));
@@ -116,7 +115,12 @@ public class PlayState extends State {
         cam.position.x = horse.getPosition().x + 220;
         for (ISprite subObj : obj) {
             if (cam.position.x - (cam.viewportWidth / 2) > subObj.getPos().x + subObj.getTexture().getWidth()) {
-                subObj.reposition(subObj.getPos().x + ((subObj.getTexture().getWidth() + Obj_SPACE) * Obj_COUNT));
+                endInput = false;
+                obj.removeIndex(0);
+                System.out.println("pop");
+                randomObj(1);
+                System.out.println("Array" + obj.size);
+                //subObj.reposition(subObj.getPos().x + ((subObj.getTexture().getWidth() + Obj_SPACE) * Obj_COUNT));
             }
 
             if (subObj.collides(horse.getBounds())) {
@@ -128,15 +132,26 @@ public class PlayState extends State {
             gsm.set(new GameOverState(gsm));
 
         }
-        if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + 500) {
+        if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + enemy.ENEMY_WIDTH/2) {
             endInput = false;
-            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + 700));
+            enemy.quiz.dispose(0);
+            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE +500));
             enemy.quiz.reposition(horse.getPosition().x);
         }
+        if (obj.get(0).collides(enemy.hitBox)||obj.get(1).collides(enemy.hitBox)) {
+            enemy.dispose(-1);
+            System.out.println("remove enemy");
+        }
+//            if((obj.get(0).getPos().x - enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + 700))  < -500 || obj.get(0).getPos().x - (enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + 700))  > 500){
 
-//        if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x +500) {
+//            }
+
+
+//        if (cam.position.x - (cam.viewportWidth / 2) > obj.first().getPos().x +150) {
 //            endInput = false;
-//            randomObj();
+//            obj.pop();
+//            System.out.println("pop");
+//            randomObj(1);
 //        }
 
 //        if (cam.position.x - (cam.viewportWidth / 2) > bat.getPosBat().x +500) {
