@@ -23,11 +23,11 @@ public class Enemy {
     public Rectangle hitBox;
     public boolean isHit=false;
     boolean isDead = false;
-
+    boolean hide = false;
     public Enemy(float x) {
         posEnemy = new Vector2(x, 29);
-        hitBox = new Rectangle(posEnemy.x+50, posEnemy.y, ENEMY_WIDTH*2, (ENEMY_HIGHT*9999));
-        enemySlashHitBox = new Rectangle((posEnemy.x-50),posEnemy.y,ENEMY_WIDTH,(ENEMY_HIGHT*9999));
+        hitBox = new Rectangle(posEnemy.x+50, posEnemy.y, (ENEMY_WIDTH+60), (ENEMY_HIGHT+500));
+        enemySlashHitBox = new Rectangle((posEnemy.x-60),posEnemy.y,ENEMY_WIDTH,(ENEMY_HIGHT+500));
         deadAnimation = new Animation(new TextureRegion(new Texture("dead.png")), 4, 1f, true);
         slashing = new Animation(new TextureRegion(new Texture("enemySlash.png")), 7, 1.15f);
         stand = new Animation(new TextureRegion(enemy), 6, 0.8f, true);
@@ -53,7 +53,10 @@ public class Enemy {
         else if (isDead)
         {
             return deadAnimation.getFrames();
-        } else
+        }else if(hide){
+            return new TextureRegion(new Texture("empty.png"));
+        }
+        else
         {
             return stand.getFrames();
         }
@@ -66,9 +69,11 @@ public class Enemy {
             posEnemy.set(posEnemy.x, posEnemy.y + 20);
             isDead = true;
         }if (n == -1) {
+            hide = true;
             enemy = new Texture("empty.png");
-            hitBox.setSize(0, 0);
-            enemySlashHitBox.setSize(0,0);
+            hitBox = new Rectangle(0,0,0,0);
+            enemySlashHitBox = new Rectangle(0,0,0,0);
+            System.out.println("hide");
         }
         quiz.dispose(n);
 
@@ -88,5 +93,9 @@ public class Enemy {
         isHit = true;
         slashing.start();
         posEnemy.set(posEnemy.x-145,posEnemy.y-32);
+    }
+
+    public void dispose(){
+        enemy.dispose();
     }
 }

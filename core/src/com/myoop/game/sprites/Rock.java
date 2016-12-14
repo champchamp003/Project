@@ -19,18 +19,16 @@ public class Rock implements ISprite{
     public Vector2 getPos() {
         return posRock;
     }
-    public static final int ROCK_WIDTH = 30;
+    public static final int ROCK_WIDTH = 35;
     private Texture rock;
     private Vector2 posRock;
-    private Random rand;
     private Rectangle boundsRock;
 
 
     public Rock(float x){
         rock = new Texture("rock.png");
-        rand = new Random();
         posRock = new Vector2(x, 32);
-        boundsRock = new Rectangle(posRock.x, posRock.y, rock.getWidth()-30,rock.getHeight()-30);
+        boundsRock = new Rectangle(posRock.x, posRock.y, rock.getWidth()-10,rock.getHeight()-30);
     }
 
     public void reposition(float x){
@@ -43,10 +41,15 @@ public class Rock implements ISprite{
     }
 
     public void dispose(){
-
+        rock.dispose();
     }
 
     public void update(float dt){
 
     }
+
+    public Rectangle getHitBox() {
+        return boundsRock;
+    }
+
 }

@@ -39,9 +39,9 @@ public class Quiz {
     private final Texture[][] allQuiz = {quiz1, quiz2, quiz3, quiz4, quiz5, quiz6, quiz7, quiz8, quiz9, quiz10, quiz11, quiz12, quiz13, quiz14, quiz15, quiz16, quiz17, quiz18, quiz19, quiz20};
 
     private Vector2 posQuiz = new Vector2(57, 255);
-    private Vector2 posAns1 = new Vector2(79, 300);
-    private Vector2 posAns2 = new Vector2(159, 300);
-    private Vector2 posAns3 = new Vector2(239, 300);
+    private Vector2 posAns1 = new Vector2(80, 300);
+    private Vector2 posAns2 = new Vector2(162, 300);
+    private Vector2 posAns3 = new Vector2(242, 300);
     private Vector2 posAns4 = new Vector2(316, 300);
 
     public Quiz() {
@@ -137,12 +137,12 @@ public class Quiz {
 
     public void dispose(int n) {
         quiz = empty;
-        if (n == rightChoice) {
+        if(n==rightChoice){
             quiz = correct;
-            posQuiz.set(posQuiz.x + 10, posQuiz.y - 45);
-        } else if (n != rightChoice && n != 0 && n != -1) {
+            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
+        }else if(n!=rightChoice&&n!=0&&n!=-1){
             quiz = wrong;
-            posQuiz.set(posQuiz.x + 10, posQuiz.y - 45);
+            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
         }
         ans1 = empty;
         ans2 = empty;

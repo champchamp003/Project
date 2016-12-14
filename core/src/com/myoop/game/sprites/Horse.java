@@ -1,5 +1,7 @@
 package com.myoop.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,7 +21,8 @@ public class Horse {
     private Rectangle bounds;
     private Animation hourseAnimation;
     private Animation deadAnimation;
-
+    private Sound HJ;
+    private Sound attack;
     public Horse(int x, int y) {
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0, 0);
@@ -29,6 +32,8 @@ public class Horse {
         bounds = new Rectangle(x, y, texture.getWidth() / 7 - 30, texture.getHeight() -50);
         hourseJumpAnimation = new Animation(new TextureRegion(new Texture("HorseJump.png")), 1, 0.5f);
         deadAnimation = new Animation(new TextureRegion(new Texture("dead.png")), 4, 1f, true);
+        HJ = Gdx.audio.newSound(Gdx.files.internal("HJ.mp3"));
+        attack = Gdx.audio.newSound(Gdx.files.internal("attack.mp3"));
     }
 
     public void update(float dt) {
@@ -62,6 +67,9 @@ public class Horse {
             velocity.y = 500;
             jumping--;
         }
+        if(jumping == 1){
+            HJ.play();
+        }
     }
 
     public Rectangle getBounds() {
@@ -69,12 +77,18 @@ public class Horse {
     }
 
     public void slash(){
+        attack.play();
         slashing.start();
     }
 
     public void die(){
+        position.set(position.x,40,0);
         hourseAnimation = deadAnimation;
         hourseJumpAnimation =deadAnimation;
 
+    }
+
+    public void dispose(){
+        HJ.dispose();
     }
 }

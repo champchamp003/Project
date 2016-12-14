@@ -11,7 +11,6 @@ import com.myoop.game.states.MenuState;
 
 public class OOProject extends ApplicationAdapter {
 	private SpriteBatch batch;
-	private Music music;
 
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
@@ -24,10 +23,6 @@ public class OOProject extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		gsm = new GameStateManager();
-		music = Gdx.audio.newMusic(Gdx.files.internal("Music.mp3"));
-		music.setLooping(true);
-		music.setVolume(0.5f);
-		music.play();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		gsm.push(new MenuState(gsm));
 	}

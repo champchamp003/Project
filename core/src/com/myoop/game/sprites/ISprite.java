@@ -11,7 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 public interface ISprite {
     TextureRegion getTexture();
     Vector2 getPos();
+    Rectangle getHitBox();
     Texture  getNorTex();
     void update(float dt);
     boolean collides(Rectangle player);
+    void dispose();
 }

@@ -18,6 +18,10 @@ public class Bat implements ISprite{
     private Rectangle hitBox;
 
 
+    public Rectangle getHitBox() {
+        return hitBox;
+    }
+
     public Bat(float x){
         posBat = new Vector2(x,200);
         batAni =new Animation(new TextureRegion(bat),5, 0.5f ,true);
@@ -49,6 +53,7 @@ public class Bat implements ISprite{
     }
 
     public void dispose(){
+        bat.dispose();
     }
 
     public void update(float dt){

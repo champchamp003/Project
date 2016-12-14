@@ -1,6 +1,7 @@
 package com.myoop.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.myoop.game.OOProject;
@@ -11,18 +12,21 @@ import com.myoop.game.OOProject;
 public class MenuState extends State {
     private Texture background;
     private Texture playBtn;
-
+    private Music music;
     public MenuState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("BGgif.gif");
         playBtn = new Texture("play.png");
+        music = Gdx.audio.newMusic(Gdx.files.internal("Music.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
     }
 
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()){
             gsm.set(new PlayState(gsm));
-            dispose();
         }
     }
 
@@ -43,5 +47,7 @@ public class MenuState extends State {
     public void dispose() {
         background.dispose();
         playBtn.dispose();
+        music.stop();
+        music.dispose();
     }
 }

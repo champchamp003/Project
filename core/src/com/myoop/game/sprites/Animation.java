@@ -51,4 +51,5 @@ public class Animation {
     public boolean isFinish() {
         return loop || frame >= frameCount;
     }
+
 }
