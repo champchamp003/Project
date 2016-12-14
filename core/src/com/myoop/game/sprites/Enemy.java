@@ -71,7 +71,6 @@ public class Enemy {
             enemy = new Texture("empty.png");
             hitBox = new Rectangle(0, 0, 0, 0);
             enemySlashHitBox = new Rectangle(0, 0, 0, 0);
-            System.out.println("hide");
         }
         quiz.dispose(n);
 

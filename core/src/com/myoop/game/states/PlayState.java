@@ -146,7 +146,6 @@ public class PlayState extends State {
         }
         if (obj.get(0).collides(enemy.hitBox)||obj.get(1).collides(enemy.hitBox)||obj.get(2).collides(enemy.hitBox)) {
             enemy.dispose(-1);
-            System.out.println("remove");
         }
 
         if (enemy.collidesSlash(horse.getBounds()) && !enemy.isHit) {
@@ -171,7 +170,7 @@ public class PlayState extends State {
             enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 500));
             enemy.quiz.reposition(horse.getPosition().x);
         }
-        
+
         cam.update();
     }
 
