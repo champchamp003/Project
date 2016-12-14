@@ -5,10 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.myoop.game.sprites.Bat;
-import com.myoop.game.sprites.Enemy;
-import com.myoop.game.sprites.Horse;
-import com.myoop.game.sprites.Rock;
+import com.myoop.game.sprites.*;
+import com.myoop.game.miniGame.Quiz;
 
 import java.util.Random;
 
@@ -22,13 +20,14 @@ public class PlayState extends State {
     private int random = (int) (Math.random() * 1000 + 200);
     private static int Obj_SPACE = rand.nextInt(350) + 500;
     private static int Obj_COUNT = 4;
-    private Array<Rock> rocks;
-    //private Rock rock;
-   // private Bat bat;
+    //private Array<Rock> rocks;
+    private Rock rock;
+    private Bat bat;
     private Enemy enemy;
     private boolean endInput = false;
     public boolean canJump = true;
-   // private Array<obj> obj = {rock,bat,enemy};
+    private Array<ISprite> obj = new Array<ISprite>();
+    private Quiz quiz;
 
     private boolean spaceAlreadyPressed = false;
 
@@ -39,6 +38,7 @@ public class PlayState extends State {
         cam.setToOrtho(false, 600, 600);
 
         enemy = new Enemy(500);
+
         //bat = new Bat(0);
         //rock = new Rock(250);
         //enemy.dispose();
@@ -47,22 +47,27 @@ public class PlayState extends State {
         //randomObj();
 //        bat = new Bat();
 //        rock = new Rock();
-//        for (int i = 1; i <= Obj_COUNT; i++) {
-//            rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
-//        }
+        for (int i = 1; i <= Obj_COUNT; i++) {
+            rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
+        }
     }
 
-//    private void randomObj(){
-//        int rand = (int) (Math.random() * 100 + 1);
-//        if(rand<=50){
-//            rock = new Rock(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
-//        }else if(rand>50&&rand<=80){
-//            bat = new Bat(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
-//        }else {
-//            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + (random = (int) (Math.random() * 1000 + 200) + 700)));
-//            enemy.quiz.reposition(horse.getPosition().x);
-//        }
-//    }
+    private void randomObj(int n) {
+        for (int i = 0; i < 4; i++) {
+            int rand = (int) (Math.random() * 10 + 1);
+            if (rand == 1 || rand == 2 || rand == 3 || rand == 4 || rand == 5) {
+                obj.add(new Rock(horse.getPosition().x + (random = (int) (Math.random() * 1000 + 200))));
+                //rock = new Rock(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
+            } else if (rand == 6 || rand == 7 || rand == 8) {
+                obj.add(new Bat(horse.getPosition().x + (random = (int) (Math.random() * 1000 + 200))));
+                //bat = new Bat(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
+            } else if (rand == 9 || rand == 10) {
+                obj.add(new Enemy(horse.getPosition().x + (random = (int) (Math.random() * 1000 + 200)));
+                //enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + (random = (int) (Math.random() * 1000 + 200) + 700)));
+                quiz.reposition(horse.getPosition().x);
+            }
+        }
+    }
 
     @Override
     protected void handleInput() {
@@ -71,34 +76,33 @@ public class PlayState extends State {
         }
         if (cam.position.x > enemy.getPosEnemy().x && !endInput) {
             canJump = false;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
                 endInput = true;
-                if (enemy.quiz.choose(1)) {
-                    canJump = true;
-                    enemy.dispose();
-                    System.out.println("GG");
-                }
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+                enemy.quiz.choose(1);
+                canJump = true;
+                enemy.dispose(1);
+                System.out.println("GG");
+
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
                 endInput = true;
-                if (enemy.quiz.choose(2)) {
-                    canJump = true;
-                    enemy.dispose();
-                    System.out.println("GG");
-                }
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                enemy.quiz.choose(2);
+                canJump = true;
+                enemy.dispose(2);
+                System.out.println("GG");
+
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
                 endInput = true;
-                if (enemy.quiz.choose(3)) {
-                    canJump = true;
-                    enemy.dispose();
-                    System.out.println("GG");
-                }
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+                enemy.quiz.choose(3);
+                canJump = true;
+                enemy.dispose(3);
+                System.out.println("GG");
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
                 endInput = true;
-                if (enemy.quiz.choose(4)) {
-                    canJump = true;
-                    enemy.dispose();
-                    System.out.println("GG");
-                }
+                enemy.quiz.choose(4);
+                canJump = true;
+                enemy.dispose(4);
+                System.out.println("GG");
+
             }
         }
     }
@@ -125,9 +129,9 @@ public class PlayState extends State {
             gsm.set(new GameOverState(gsm));
 
         }
-        if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x+500) {
+        if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + 500) {
             endInput = false;
-            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + (random = (int) (Math.random() * 700 + 300) )));
+            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + (random = (int) (Math.random() * 700 + 300))));
             enemy.quiz.reposition(horse.getPosition().x);
             //randomObj();
         }

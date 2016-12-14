@@ -11,6 +11,10 @@ public class Quiz {
     private Texture quiz, ans1, ans2, ans3, ans4;
     private int rightChoice = 0;
 
+    private final Texture correct = new Texture("correct.png");
+    private final Texture wrong = new Texture("wrong.png");
+    private final Texture empty = new Texture("empty.png");
+
     private final Texture[] quiz1 = {new Texture("quiz1.png"), new Texture("ans1.png")};
     private final Texture[] quiz2 = {new Texture("quiz2.png"), new Texture("ans2.png")};
     private final Texture[] quiz3 = {new Texture("quiz3.png"), new Texture("ans3.png")};
@@ -132,12 +136,19 @@ public class Quiz {
         return false;
     }
 
-    public void dispose() {
-        quiz = new Texture("empty.png");
-        ans1 = new Texture("empty.png");
-        ans2 = new Texture("empty.png");
-        ans3 = new Texture("empty.png");
-        ans4 = new Texture("empty.png");
+    public void dispose(int n) {
+        quiz = empty;
+        ans1 = empty;
+        ans2 = empty;
+        ans3 = empty;
+        ans4 = empty;
+        if(n==rightChoice){
+            quiz = correct;
+            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
+        }else if(n!=rightChoice){
+            quiz = wrong;
+            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
+        }
 
     }
 
@@ -182,10 +193,6 @@ public class Quiz {
         this.ans4 = ans4;
     }
 
-    public int getRightChoice() {
-        return rightChoice;
-    }
-
     public void setRightChoice(int rightChoice) {
         this.rightChoice = rightChoice;
     }
@@ -208,6 +215,10 @@ public class Quiz {
 
     public Vector2 getPosAns4() {
         return posAns4;
+    }
+
+    public int getRightChoice() {
+        return rightChoice;
     }
 
 }

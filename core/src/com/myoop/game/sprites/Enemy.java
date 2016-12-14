@@ -9,12 +9,12 @@ import com.myoop.game.miniGame.Quiz;
 /**
  * Created by Champ on 8/12/2559.
  */
-public class Enemy {
+public class Enemy implements ISprite{
     public final int ENEMY_WIDTH = 500;
     public final int ENEMY_HIGHT = 259;
     private Texture enemy = new Texture("enemy1.png");
     private Vector2 posEnemy;
-    public Quiz quiz = new Quiz();
+    //public Quiz quiz = new Quiz();
     private Rectangle hitBox;
 
     public Enemy(float x){
@@ -24,7 +24,7 @@ public class Enemy {
 
     public void reposition(float x){
         posEnemy.set(x, 0);
-        quiz = new Quiz();
+        //quiz = new Quiz();
         hitBox.setPosition(posEnemy);
     }
 
@@ -32,17 +32,21 @@ public class Enemy {
         return player.overlaps(hitBox);
     }
 
-    public Vector2 getPosEnemy() {
+    public Vector2 getPos() {
         return posEnemy;
     }
 
-    public Texture getEnemy() {
+    public Texture getTexture() {
         return enemy;
     }
 
-    public void dispose(){
-        enemy = new Texture("empty.png");
-        quiz.dispose();
-        hitBox.setSize(0,0);
+    public void dispose(int n){
+        //if(n==quiz.getRightChoice()){
+            enemy = new Texture("dead.png");
+            hitBox.setSize(0,0);
+            posEnemy.set(posEnemy.x,posEnemy.y+50);
+        //}
+        //quiz.dispose(n);
+
     }
 }

@@ -8,7 +8,7 @@ import com.myoop.game.states.PlayState;
 /**
  * Created by Champ on 12/13/2016.
  */
-public class Bat {
+public class Bat implements ISprite{
     public final int BAT_WIDTH = 75;
     public final int BAT_HIGHT = 56;
     private Texture bat = new Texture("bat1.png");
@@ -34,7 +34,7 @@ public class Bat {
         return posBat;
     }
 
-    public Texture getBat() {
+    public Texture getTexture() {
         return bat;
     }
 

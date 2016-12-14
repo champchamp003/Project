@@ -9,12 +9,12 @@ import java.util.Random;
 /**
  * Created by WaveToMe on 11/10/2016 AD.
  */
-public class Rock {
-    public Texture getRock() {
+public class Rock implements ISprite{
+    public Texture getTexture() {
         return rock;
     }
 
-    public Vector2 getPosRock() {
+    public Vector2 getPos() {
         return posRock;
     }
     public static final int ROCK_WIDTH = 30;

@@ -2,12 +2,13 @@ package com.myoop.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by WaveToMe on 11/9/2016 AD.
  */
-public class Horse {
+public class Horse implements ISprite{
     private static int GRAVITY = -15;
     public static int MOVEMENT = 150;
     private Vector3 position;
@@ -42,7 +43,11 @@ public class Horse {
         return position;
     }
 
-    public Texture getHorse() {
+    public Vector2 getPos(){
+        return new Vector2(position.x,position.y);
+    }
+
+    public Texture getTexture() {
         return horse;
     }
 
