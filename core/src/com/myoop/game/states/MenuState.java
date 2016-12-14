@@ -13,12 +13,14 @@ public class MenuState extends State {
     private Texture background;
     private Texture howToPlay;
     private Texture playBtn;
+    private Texture name;
     private Music music;
     public MenuState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("BGgif.gif");
         howToPlay = new Texture("Tutorial.png");
         playBtn = new Texture("play.png");
+        name = new Texture("name.png");
         music = Gdx.audio.newMusic(Gdx.files.internal("Music.mp3"));
         music.setLooping(true);
         music.setVolume(0.5f);
@@ -42,6 +44,7 @@ public class MenuState extends State {
         sb.begin();
         sb.draw(background,0,0, OOProject.WIDTH, OOProject.HEIGHT);
         sb.draw(howToPlay,0,0,OOProject.WIDTH/2,OOProject.HEIGHT/2);
+        sb.draw(name, (OOProject.WIDTH / 2) - 215, OOProject.HEIGHT / 2 + 70, 450, 200);
         sb.draw(playBtn, (OOProject.WIDTH/2)-(125/2), OOProject.HEIGHT/2 - (150/2),125,125);
         sb.end();
     }
