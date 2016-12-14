@@ -17,7 +17,7 @@ public class PlayState extends State {
     private Horse horse;
     private Texture background;
     private static Random rand = new Random();
-    private int random = (int) (Math.random() * 1000 + 200);
+    //private int random = (int) (Math.random() * 1000 + 200);
     private static int Obj_SPACE = rand.nextInt(350) + 500;
     private static int Obj_COUNT = 4;
     //private Array<Rock> rocks;
@@ -37,7 +37,7 @@ public class PlayState extends State {
         horse = new Horse(15, 200);
         cam.setToOrtho(false, 600, 600);
 
-        enemy = new Enemy(500);
+        enemy = new Enemy(1000);
 
         //bat = new Bat(0);
         //rock = new Rock(250);
@@ -47,31 +47,32 @@ public class PlayState extends State {
         //randomObj();
 //        bat = new Bat();
 //        rock = new Rock();
-        for (int i = 1; i <= Obj_COUNT; i++) {
-            rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
-        }
+        randomObj(4);
+//        for (int i = 1; i <= Obj_COUNT; i++) {
+//            rocks.add(new Rock(i * (Obj_SPACE + Rock.ROCK_WIDTH)));
+//        }
     }
 
     private void randomObj(int n) {
         for (int i = 0; i < 4; i++) {
-            int rand = (int) (Math.random() * 10 + 1);
-            if (rand == 1 || rand == 2 || rand == 3 || rand == 4 || rand == 5) {
-                obj.add(new Rock(horse.getPosition().x + (random = (int) (Math.random() * 1000 + 200))));
+            int rand = (int) (Math.random() * 5 + 1);
+            if (rand == 1 || rand == 2 || rand == 3) {
+                obj.add(new Rock((obj.size+1)*(Obj_SPACE + Rock.ROCK_WIDTH)));
                 //rock = new Rock(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
-            } else if (rand == 6 || rand == 7 || rand == 8) {
-                obj.add(new Bat(horse.getPosition().x + (random = (int) (Math.random() * 1000 + 200))));
+            } else if (rand == 4 || rand == 5) {
+                obj.add(new Bat((obj.size+1)*(Obj_SPACE + Bat.BAT_WIDTH)));
                 //bat = new Bat(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
-            } else if (rand == 9 || rand == 10) {
-                obj.add(new Enemy(horse.getPosition().x + (random = (int) (Math.random() * 1000 + 200)));
-                //enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + (random = (int) (Math.random() * 1000 + 200) + 700)));
-                quiz.reposition(horse.getPosition().x);
+//            } else if (rand == 9 || rand == 10) {
+//                obj.add(new Enemy((obj.size+1)*(Obj_SPACE + Enemy.ENEMY_WIDTH)));
+//                //enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + (random = (int) (Math.random() * 1000 + 200) + 700)));
+//                quiz.reposition(horse.getPosition().x);
             }
         }
     }
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && canJump && !enemy.getEnemy().equals("empty.png")) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             horse.jump();
         }
         if (cam.position.x > enemy.getPosEnemy().x && !endInput) {
@@ -113,27 +114,24 @@ public class PlayState extends State {
         horse.update(dt);
         enemy.quiz.update(dt);
         cam.position.x = horse.getPosition().x + 220;
-//        for (Rock rock : rocks) {
-//            if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x + rock.getRock().getWidth()) {
-//                rock.reposition(rock.getPosRock().x + ((Rock.ROCK_WIDTH + Obj_SPACE) * Obj_COUNT));
-//            }
-//
-//            if (rock.collides(horse.getBounds())) {
-//                gsm.set(new GameOverState(gsm));
-//            }
-//        }
-//        if (rock.collides(horse.getBounds())) {
-//                gsm.set(new GameOverState(gsm));
-//            }
+        for (ISprite subObj : obj) {
+            if (cam.position.x - (cam.viewportWidth / 2) > subObj.getPos().x + subObj.getTexture().getWidth()) {
+                subObj.reposition(subObj.getPos().x + ((subObj.getTexture().getWidth() + Obj_SPACE) * Obj_COUNT));
+            }
+
+            if (subObj.collides(horse.getBounds())) {
+                gsm.set(new GameOverState(gsm));
+            }
+        }
+
         if (enemy.collides(horse.getBounds())) {
             gsm.set(new GameOverState(gsm));
 
         }
         if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + 500) {
             endInput = false;
-            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + (random = (int) (Math.random() * 700 + 300))));
+            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + 700));
             enemy.quiz.reposition(horse.getPosition().x);
-            //randomObj();
         }
 
 //        if (cam.position.x - (cam.viewportWidth / 2) > rock.getPosRock().x +500) {
@@ -169,9 +167,9 @@ public class PlayState extends State {
             sb.draw(enemy.quiz.getAns4(), enemy.quiz.getPosAns4().x, enemy.quiz.getPosAns4().y);
         }
 
-//        for (Rock rock : rocks) {
-//            sb.draw(rock.getRock(), rock.getPosRock().x, rock.getPosRock().y);
-//        }
+        for (ISprite subObj : obj) {
+            sb.draw(subObj.getTexture(), subObj.getPos().x, subObj.getPos().y);
+        }
         sb.end();
     }
 

@@ -1,6 +1,7 @@
 package com.myoop.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -9,4 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 public interface ISprite {
     Texture getTexture();
     Vector2 getPos();
+    void reposition(float x);
+    boolean collides(Rectangle player);
 }

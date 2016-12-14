@@ -9,12 +9,12 @@ import com.myoop.game.miniGame.Quiz;
 /**
  * Created by Champ on 8/12/2559.
  */
-public class Enemy implements ISprite{
+public class Enemy {
     public final int ENEMY_WIDTH = 500;
     public final int ENEMY_HIGHT = 259;
     private Texture enemy = new Texture("enemy1.png");
     private Vector2 posEnemy;
-    //public Quiz quiz = new Quiz();
+    public Quiz quiz = new Quiz();
     private Rectangle hitBox;
 
     public Enemy(float x){
@@ -22,31 +22,31 @@ public class Enemy implements ISprite{
         hitBox = new Rectangle(posEnemy.x+150,posEnemy.y,ENEMY_WIDTH/3,ENEMY_HIGHT*0.7f);
     }
 
-    public void reposition(float x){
-        posEnemy.set(x, 0);
-        //quiz = new Quiz();
-        hitBox.setPosition(posEnemy);
-    }
+//    public void reposition(float x){
+//        posEnemy.set(x, 0);
+//        quiz = new Quiz();
+//        hitBox.setPosition(posEnemy);
+//    }
 
     public boolean collides(Rectangle player){
         return player.overlaps(hitBox);
     }
 
-    public Vector2 getPos() {
+    public Vector2 getPosEnemy() {
         return posEnemy;
     }
 
-    public Texture getTexture() {
+    public Texture getEnemy() {
         return enemy;
     }
 
     public void dispose(int n){
-        //if(n==quiz.getRightChoice()){
+        if(n==quiz.getRightChoice()){
             enemy = new Texture("dead.png");
             hitBox.setSize(0,0);
             posEnemy.set(posEnemy.x,posEnemy.y+50);
-        //}
-        //quiz.dispose(n);
+        }
+        quiz.dispose(n);
 
     }
 }
