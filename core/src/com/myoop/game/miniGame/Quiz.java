@@ -137,12 +137,12 @@ public class Quiz {
 
     public void dispose(int n) {
         quiz = empty;
-        if(n==rightChoice){
+        if (n == rightChoice) {
             quiz = correct;
-            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
-        }else if(n!=rightChoice&&n!=0&&n!=-1){
+            posQuiz.set(posQuiz.x + 10, posQuiz.y - 45);
+        } else if (n != rightChoice && n != 0 && n != -1) {
             quiz = wrong;
-            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
+            posQuiz.set(posQuiz.x + 10, posQuiz.y - 45);
         }
         ans1 = empty;
         ans2 = empty;

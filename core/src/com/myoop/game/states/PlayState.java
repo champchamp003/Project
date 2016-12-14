@@ -56,10 +56,10 @@ public class PlayState extends State {
         for (int i = 0; i < n; i++) {
             int rand = (int) (Math.random() * 5 + 1);
             if (rand == 1 || rand == 2 || rand == 3) {
-                obj.add(new Rock(horse.getPosition().x+(obj.size+1)*(Obj_SPACE + Rock.ROCK_WIDTH+150)));
+                obj.add(new Rock(horse.getPosition().x + (obj.size + 1) * (Obj_SPACE + Rock.ROCK_WIDTH + 150)));
                 //rock = new Rock(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
             } else if (rand == 4 || rand == 5) {
-                obj.add(new Bat(horse.getPosition().x+(obj.size+1)*(Obj_SPACE + Bat.BAT_WIDTH+150)));
+                obj.add(new Bat(horse.getPosition().x + (obj.size + 1) * (Obj_SPACE + Bat.BAT_WIDTH + 150)));
                 //bat = new Bat(horse.getPosition().x+ (random = (int) (Math.random() * 1000 + 200)));
 //            } else if (rand == 9 || rand == 10) {
 //                obj.add(new Enemy((obj.size+1)*(Obj_SPACE + Enemy.ENEMY_WIDTH)));
@@ -132,13 +132,13 @@ public class PlayState extends State {
             gsm.set(new GameOverState(gsm));
 
         }
-        if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + enemy.ENEMY_WIDTH/2) {
+        if (cam.position.x - (cam.viewportWidth / 2) > enemy.getPosEnemy().x + enemy.ENEMY_WIDTH / 2) {
             endInput = false;
             enemy.quiz.dispose(0);
-            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE +500));
+            enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 500));
             enemy.quiz.reposition(horse.getPosition().x);
         }
-        if (obj.get(0).collides(enemy.hitBox)||obj.get(1).collides(enemy.hitBox)) {
+        if (obj.get(0).collides(enemy.hitBox) || obj.get(1).collides(enemy.hitBox)) {
             enemy.dispose(-1);
             System.out.println("remove enemy");
         }
