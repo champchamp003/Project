@@ -20,7 +20,7 @@ public class Bat implements ISprite{
 
     public Bat(float x){
         posBat = new Vector2(x,200);
-        batAni =new Animation(new TextureRegion(bat),5, 0.5f );
+        batAni =new Animation(new TextureRegion(bat),5, 0.5f ,true);
         hitBox = new Rectangle(posBat.x-20,posBat.y-50,BAT_WIDTH*0.75f,BAT_HIGHT*0.75f);
     }
 
