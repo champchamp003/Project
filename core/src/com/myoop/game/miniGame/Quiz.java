@@ -11,10 +11,10 @@ public class Quiz {
     private Texture quiz, ans1, ans2, ans3, ans4;
     private int rightChoice = 0;
 
-    private final Texture ch1 = new Texture("num1.png");
-    private final Texture ch2 = new Texture("num2.png");
-    private final Texture ch3 = new Texture("num3.png");
-    private final Texture ch4 = new Texture("num4.png");
+    private Texture ch1 = new Texture("num1.png");
+    private Texture ch2 = new Texture("num2.png");
+    private Texture ch3 = new Texture("num3.png");
+    private Texture ch4 = new Texture("num4.png");
 
     private final Texture correct = new Texture("correct.png");
     private final Texture wrong = new Texture("wrong.png");
@@ -49,10 +49,10 @@ public class Quiz {
     private Vector2 posAns3 = new Vector2(242, 300);
     private Vector2 posAns4 = new Vector2(316, 300);
 
-    private Vector2 posCh1 = new Vector2(posAns1.x,posAns1.y+25);
-    private Vector2 posCh2 = new Vector2(posAns2.x,posAns2.y+25);
-    private Vector2 posCh3 = new Vector2(posAns3.x,posAns3.y+25);
-    private Vector2 posCh4 = new Vector2(posAns4.x,posAns4.y+25);
+    private Vector2 posCh1 = new Vector2(posAns1.x, posAns1.y + 25);
+    private Vector2 posCh2 = new Vector2(posAns2.x, posAns2.y + 25);
+    private Vector2 posCh3 = new Vector2(posAns3.x, posAns3.y + 25);
+    private Vector2 posCh4 = new Vector2(posAns4.x, posAns4.y + 25);
 
     public Quiz() {
         generate();
@@ -61,8 +61,6 @@ public class Quiz {
     private void generate() {
         int randQuiz = (int) (Math.random() * 19 + 0);
         int randAns = (int) (Math.random() * 4 + 1);
-        System.out.println("\nQuiz : " + randQuiz);
-        System.out.println("RIGHT ANS : " + randAns);
         setQuiz(allQuiz[randQuiz][0]);
         setChoice(randAns, allQuiz[randQuiz][1]);
     }
@@ -99,22 +97,17 @@ public class Quiz {
                 switch (i) {
                     case 1:
                         setAns1(allQuiz[randQuiz][1]);
-                        System.out.println(randQuiz);
                         break;
                     case 2:
                         setAns2(allQuiz[randQuiz][1]);
-                        System.out.println(randQuiz);
                         break;
                     case 3:
                         setAns3(allQuiz[randQuiz][1]);
-                        System.out.println(randQuiz);
                         break;
                     case 4:
                         setAns4(allQuiz[randQuiz][1]);
-                        System.out.println(randQuiz);
                         break;
                 }
-
             }
         }
     }
@@ -125,10 +118,10 @@ public class Quiz {
         posAns2.add(Horse.MOVEMENT * dt, 0);
         posAns3.add(Horse.MOVEMENT * dt, 0);
         posAns4.add(Horse.MOVEMENT * dt, 0);
-        posCh1.add(Horse.MOVEMENT * dt,0);
-        posCh2.add(Horse.MOVEMENT * dt,0);
-        posCh3.add(Horse.MOVEMENT * dt,0);
-        posCh4.add(Horse.MOVEMENT * dt,0);
+        posCh1.add(Horse.MOVEMENT * dt, 0);
+        posCh2.add(Horse.MOVEMENT * dt, 0);
+        posCh3.add(Horse.MOVEMENT * dt, 0);
+        posCh4.add(Horse.MOVEMENT * dt, 0);
     }
 
     public void reposition(float v) {
@@ -149,17 +142,21 @@ public class Quiz {
 
     public void dispose(int n) {
         quiz = empty;
-        if(n==rightChoice){
+        if (n == rightChoice) {
             quiz = correct;
-            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
-        }else if(n!=rightChoice&&n!=0&&n!=-1){
+            posQuiz.set(posQuiz.x + 10, posQuiz.y - 45);
+        } else if (n != rightChoice && n != 0 && n != -1) {
             quiz = wrong;
-            posQuiz.set(posQuiz.x+10,posQuiz.y-45);
+            posQuiz.set(posQuiz.x + 10, posQuiz.y - 45);
         }
         ans1 = empty;
         ans2 = empty;
         ans3 = empty;
         ans4 = empty;
+        ch1 = empty;
+        ch2 = empty;
+        ch3 = empty;
+        ch4 = empty;
 
 
     }

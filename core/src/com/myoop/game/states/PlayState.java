@@ -171,10 +171,7 @@ public class PlayState extends State {
             enemy = new Enemy(enemy.getPosEnemy().x + (enemy.ENEMY_WIDTH + Obj_SPACE + 500));
             enemy.quiz.reposition(horse.getPosition().x);
         }
-
-
-
-
+        
         cam.update();
     }
 

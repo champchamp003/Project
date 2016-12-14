@@ -25,30 +25,29 @@ public class Item {
         return posItem;
     }
 
-    public Item(float x,float y){
+    public Item(float x, float y) {
         item = new Texture("item.png");
-        posItem = new Vector2(x,y);
-        hitBoxItem = new Rectangle(posItem.x,posItem.y,ITEM_WIDTH,ITEM_HIGHT);
+        posItem = new Vector2(x, y);
+        hitBoxItem = new Rectangle(posItem.x, posItem.y, ITEM_WIDTH, ITEM_HIGHT);
         pick = Gdx.audio.newMusic(Gdx.files.internal("mario.mp3"));
-        }
+    }
 
 
-
-    public boolean collides(Rectangle player){
+    public boolean collides(Rectangle player) {
         return player.overlaps(hitBoxItem);
     }
 
-    public void pickUp(){
+    public void pickUp() {
         item = new Texture("empty.png");
         pick.play();
     }
 
-    public void hide(){
+    public void hide() {
         item = new Texture("empty.png");
-        hitBoxItem.setSize(0,0);
+        hitBoxItem.setSize(0, 0);
     }
 
-    public void dispose(){
+    public void dispose() {
         item.dispose();
         pick.dispose();
     }

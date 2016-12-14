@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by Champ on 12/13/2016.
  */
-public class Bat implements ISprite{
+public class Bat implements ISprite {
     public static final int BAT_WIDTH = 75;
     public static final int BAT_HIGHT = 56;
     private Texture bat = new Texture("batAni.png");
@@ -22,21 +22,17 @@ public class Bat implements ISprite{
         return hitBox;
     }
 
-    public Bat(float x){
-        posBat = new Vector2(x,200);
-        batAni =new Animation(new TextureRegion(bat),5, 0.5f ,true);
-        hitBox = new Rectangle(posBat.x-20,posBat.y-50,BAT_WIDTH*0.75f,BAT_HIGHT*0.75f);
+    public Bat(float x) {
+        posBat = new Vector2(x, 200);
+        batAni = new Animation(new TextureRegion(bat), 5, 0.5f, true);
+        hitBox = new Rectangle(posBat.x - 20, posBat.y - 50, BAT_WIDTH * 0.75f, BAT_HIGHT * 0.75f);
     }
 
-    public Texture getNorTex(){
+    public Texture getNorTex() {
         return new Texture("bat1.png");
     }
-    public void reposition(float x){
-        posBat.set(x, 200);
-        hitBox.setPosition(posBat);
-    }
 
-    public boolean collides(Rectangle player){
+    public boolean collides(Rectangle player) {
         return player.overlaps(hitBox);
     }
 
@@ -45,18 +41,18 @@ public class Bat implements ISprite{
     }
 
     public TextureRegion getTexture() {
-            return batAni.getFrames();
+        return batAni.getFrames();
     }
 
     public Vector2 getPosBat() {
         return posBat;
     }
 
-    public void dispose(){
+    public void dispose() {
         bat.dispose();
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         batAni.update(dt);
     }
 }
