@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.myoop.game.states.PlayState;
 
 /**
  * Created by WaveToMe on 11/9/2016 AD.
@@ -34,6 +35,7 @@ public class Horse {
         deadAnimation = new Animation(new TextureRegion(new Texture("dead.png")), 4, 1f, true);
         HJ = Gdx.audio.newSound(Gdx.files.internal("HJ.mp3"));
         attack = Gdx.audio.newSound(Gdx.files.internal("attack.mp3"));
+        MOVEMENT = 150;
     }
 
     public void update(float dt) {
@@ -68,7 +70,7 @@ public class Horse {
             jumping--;
         }
         if(jumping == 1){
-            HJ.play();
+            HJ.play(0.5f);
         }
     }
 
@@ -90,5 +92,6 @@ public class Horse {
 
     public void dispose(){
         HJ.dispose();
+        attack.dispose();
     }
 }

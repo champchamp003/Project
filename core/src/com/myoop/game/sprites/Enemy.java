@@ -1,5 +1,8 @@
 package com.myoop.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,6 +16,7 @@ import com.myoop.game.miniGame.Quiz;
 public class Enemy {
     public int ENEMY_WIDTH = 116;
     public int ENEMY_HIGHT = 144;
+    private Sound slashFX;
     private Texture enemy = new Texture("enemyAni.png");
     private Animation deadAnimation;
     private Animation stand;
@@ -32,6 +36,7 @@ public class Enemy {
         deadAnimation = new Animation(new TextureRegion(new Texture("dead.png")), 4, 1f, true);
         slashing = new Animation(new TextureRegion(new Texture("enemySlash.png")), 7, 1.15f);
         stand = new Animation(new TextureRegion(enemy), 6, 0.8f, true);
+        slashFX = Gdx.audio.newSound(Gdx.files.internal("attack.mp3"));
     }
 
     public boolean collides(Rectangle player) {
@@ -89,6 +94,7 @@ public class Enemy {
     public void slash() {
         isHit = true;
         slashing.start();
+        slashFX.play();
         posEnemy.set(posEnemy.x - 145, posEnemy.y - 32);
     }
 

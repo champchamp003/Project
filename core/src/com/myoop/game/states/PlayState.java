@@ -33,6 +33,7 @@ public class PlayState extends State {
     private Score score1;
     private Texture ScorePic;
 
+
     protected PlayState(GameStateManager gsm) {
         super(gsm);
         background = new Texture("newBG.png");
@@ -40,7 +41,7 @@ public class PlayState extends State {
 
         music = Gdx.audio.newMusic(Gdx.files.internal("Music.mp3"));
         music.setLooping(true);
-        music.setVolume(0.5f);
+        music.setVolume(0.2f);
         music.play();
         horse = new Horse(15, 200);
         score0 = new Score(500,550);
@@ -64,9 +65,11 @@ public class PlayState extends State {
     private void randomObj(int n) {
         for (int i = 0; i < n; i++) {
             int rand = (int) (Math.random() * 10 + 1);
-            if (rand < 8) {
+            if (rand < 7) {
                 obj.add(new Rock(horse.getPosition().x + (obj.size + 1) * (Obj_SPACE + Rock.ROCK_WIDTH + 150)));
-            } else if (rand >= 8) {
+            } else if (rand < 10 && rand >= 7) {
+                obj.add(new SmallRock((horse.getPosition().x + (obj.size + 1) * (Obj_SPACE + Rock.ROCK_WIDTH + 150))));
+            } else if (rand == 10) {
                 obj.add(new Bat(horse.getPosition().x + (obj.size + 1) * (Obj_SPACE + Bat.BAT_WIDTH + 150)));
             }
         }

@@ -45,7 +45,7 @@ public class MenuState extends State {
         sb.draw(background,0,0, OOProject.WIDTH, OOProject.HEIGHT);
         sb.draw(howToPlay,0,0,OOProject.WIDTH/2,OOProject.HEIGHT/2);
         sb.draw(name, (OOProject.WIDTH / 2) - 215, OOProject.HEIGHT / 2 + 70, 450, 200);
-        sb.draw(playBtn, (OOProject.WIDTH/2)-(125/2), OOProject.HEIGHT/2 - (150/2),125,125);
+        sb.draw(playBtn, (OOProject.WIDTH / 2) - (125 / 2) - 40, OOProject.HEIGHT / 2 - (150 / 2), 220, 125);
         sb.end();
     }
 

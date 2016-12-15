@@ -62,7 +62,9 @@ public class Quiz {
         int randQuiz = (int) (Math.random() * 19 + 0);
         int randAns = (int) (Math.random() * 4 + 1);
         setQuiz(allQuiz[randQuiz][0]);
+        System.out.println(randAns);
         setChoice(randAns, allQuiz[randQuiz][1]);
+
     }
 
     private void setChoice(int choice, Texture ans) {
@@ -130,6 +132,10 @@ public class Quiz {
         posAns2.x += v;
         posAns3.x += v;
         posAns4.x += v;
+        posCh1.x += v;
+        posCh2.x += v;
+        posCh3.x += v;
+        posCh4.x += v;
     }
 
     public boolean choose(int n) {
